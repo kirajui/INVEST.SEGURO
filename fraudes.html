@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Fraudes • Invest Seguroo</title>
+
+  <style>
+    :root{
+      --primary:#0b2f4f;
+      --primary-2:#0f3e66;
+      --accent:#2b7bbb;
+      --accent-2:#4aa3e0;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#5b6675;
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Layout geral */
+    .app{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      background:linear-gradient(180deg, #ffffff, #f7f9fb);
+      border-right:1px solid #e6e9ee;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      transition: .25s ease;
+    }
+
+    /* Logo sidebar (desktop embaixo) */
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:8px;
+      margin-top:auto; /* joga a logo pro fim no desktop */
+    }
+    .brand img{height:200px}
+
+    .side-section{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px;
+      box-shadow: var(--shadow);
+    }
+
+    .side-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .side-nav{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .side-nav a{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:600;
+      color:var(--primary);
+      transition:.15s;
+    }
+    .side-nav a:hover{
+      background:#eef5fb;
+      transform:translateX(2px);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      background:var(--accent);
+      color:white;
+      padding:11px 12px;
+      border-radius:12px;
+      font-weight:800;
+      border:none;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow: 0 8px 18px rgba(43, 123, 187, .25);
+    }
+    .btn:hover{filter:brightness(1.03); transform:translateY(-1px)}
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--primary);
+      border:1px solid #e6e9ee;
+      box-shadow:none;
+    }
+
+    /* Conteúdo principal */
+    .main{
+      padding:20px 22px 32px;
+    }
+
+    .topbar{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow: var(--shadow);
+      gap:12px;
+      position:sticky; top:0; z-index:9;
+    }
+
+    .crumb{
+      font-weight:800;
+      color:var(--primary);
+      font-size:16px;
+    }
+
+    /* Conteúdo */
+    .content{
+      margin-top:14px;
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:16px;
+      padding:18px;
+      box-shadow: var(--shadow);
+      max-width:980px;
+    }
+
+    .content h1{
+      margin:0 0 8px;
+      color:var(--primary);
+      font-size:clamp(20px, 2.6vw, 28px);
+    }
+    .content h2{
+      margin-top:18px;
+      color:var(--primary);
+      font-size:clamp(16px, 2.1vw, 20px);
+    }
+    .content p, .content ul{
+      line-height:1.65;
+      color:#334155;
+      font-size:15px;
+    }
+
+    .danger{
+      background:#fff2f2;
+      border:1px solid #ffc9c9;
+      padding:12px;
+      border-radius:12px;
+    }
+    .ok{
+      background:#eefbf2;
+      border:1px solid #ccefd8;
+      padding:12px;
+      border-radius:12px;
+    }
+
+    .actions{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px){
+      .app{grid-template-columns: 240px 1fr;}
+      .sidebar{padding:14px;}
+      .main{padding:16px;}
+    }
+
+    /* MOBILE: main em cima, sidebar embaixo + sem logo */
+    @media (max-width: 720px){
+      .app{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .main{order:1;}
+
+      .sidebar{
+        order:2;
+        position:relative;
+        height:auto;
+        border-right:none;
+        border-top:1px solid #e6e9ee;
+        padding:12px;
+      }
+
+      /* esconde logo no mobile */
+      .brand{display:none;}
+
+      .side-section{box-shadow:none;}
+      .topbar{position:relative;}
+    }
+
+    @media (min-width: 1400px){
+      .app{grid-template-columns: 320px 1fr;}
+      .main{padding:26px 30px 40px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="side-section">
+        <div class="side-title">Navegação</div>
+        <div class="side-nav">
+          <a href="index.html">🏠 Início</a>
+          <a href="propaganda.html">🎯 Propagandas</a>
+          <a href="fraudes.html" style="background:#eef5fb;">🛡️ Fraudes</a>
+          <a href="bets.html">🎲 Bets</a>
+          <a href="matematica.html">📊 Matemática</a>
+          <a href="publico.html">👥 Público-alvo</a>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-title">Sobre</div>
+        <p style="margin:0;color:var(--muted);font-size:14px;line-height:1.5;">
+          Educação financeira para proteger pessoas de golpes, falsas promessas,
+          impulsos de consumo e riscos de apostas.
+        </p>
+      </div>
+
+      <div class="side-section" style="display:grid;gap:8px;">
+        <button class="btn" onclick="location.href='fraudes.html'">Começar pelos golpes</button>
+        <button class="btn secondary" onclick="location.href='propaganda.html'">Ver propagandas</button>
+      </div>
+
+      <!-- LOGO DESKTOP (embaixo) -->
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="Invest Seguroo Logo">
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="topbar">
+        <div class="crumb">Invest Seguroo • Fraudes</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:700;">
+          Proteja-se de golpes e falsas promessas
+        </div>
+      </div>
+
+      <section class="content">
+        <h1>2. Como identificar fraudes</h1>
+        <p>
+          Golpes financeiros costumam usar pressa, promessa de lucro fácil
+          e aparência profissional. Quanto mais “perfeito demais”, mais suspeito.
+        </p>
+
+        <h2>Sinais de alerta (quase sempre é golpe)</h2>
+        <div class="danger">
+          <ul>
+            <li><strong>Lucro garantido</strong> ou “sem risco”.</li>
+            <li><strong>Urgência exagerada:</strong> “agora ou nunca”, “última chance”.</li>
+            <li><strong>Pressão para indicar amigos</strong> sem produto real (pirâmide).</li>
+            <li><strong>Pagamentos só por Pix/cripto</strong> para pessoa física.</li>
+            <li><strong>Promessa de retorno muito acima do mercado</strong>.</li>
+            <li>Empresa sem CNPJ rastreável ou com dados confusos.</li>
+          </ul>
+        </div>
+
+        <h2>Golpes mais comuns</h2>
+        <ul>
+          <li><strong>Pirâmide / “marketing multinível falso”:</strong> ganha-se mais por indicar do que por vender algo útil.</li>
+          <li><strong>Phishing:</strong> links/contatos fingindo ser banco, corretora ou loja.</li>
+          <li><strong>Investimento fake:</strong> sites clones de corretoras e fintechs.</li>
+          <li><strong>Falso empréstimo:</strong> pedem “taxa antecipada”.</li>
+          <li><strong>Bets fraudulentas:</strong> “robô que sempre ganha”, “sinal vip infalível”.</li>
+        </ul>
+
+        <h2>Como validar uma oferta antes de cair</h2>
+        <div class="ok">
+          <ul>
+            <li>Procure o <strong>CNPJ</strong> e veja se bate com o site/contato.</li>
+            <li>Pesquise o nome + “reclamação”, “golpe”, “processo”.</li>
+            <li>Compare retorno prometido com bancos/corretoras reais.</li>
+            <li>Evite decisão no impulso — <strong>durma no assunto</strong>.</li>
+            <li>Confirme no canal oficial (site/app original), não pelo link do anúncio.</li>
+          </ul>
+        </div>
+
+        <h2>Regra simples de ouro</h2>
+        <p>
+          <strong>Se o foco é te apressar e te prometer lucro fácil, fuja.</strong>
+          Investimento sério nunca precisa de pressa nem de milagre.
+        </p>
+
+        <div class="actions">
+          <a class="btn secondary" href="index.html">← Voltar ao início</a>
+          <a class="btn" href="bets.html">Próximo: Bets →</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

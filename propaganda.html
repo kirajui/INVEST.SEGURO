@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Propagandas • Invest Seguroo</title>
+
+  <style>
+    :root{
+      --primary:#0b2f4f;
+      --primary-2:#0f3e66;
+      --accent:#2b7bbb;
+      --accent-2:#4aa3e0;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#5b6675;
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Layout geral */
+    .app{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      background:linear-gradient(180deg, #ffffff, #f7f9fb);
+      border-right:1px solid #e6e9ee;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      transition: .25s ease;
+    }
+
+    /* Logo sidebar (desktop embaixo) */
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:8px;
+      margin-top:auto; /* joga a logo pro fim no desktop */
+    }
+    .brand img{height:200px}
+
+    .side-section{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px;
+      box-shadow: var(--shadow);
+    }
+
+    .side-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .side-nav{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .side-nav a{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:600;
+      color:var(--primary);
+      transition:.15s;
+    }
+    .side-nav a:hover{
+      background:#eef5fb;
+      transform:translateX(2px);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      background:var(--accent);
+      color:white;
+      padding:11px 12px;
+      border-radius:12px;
+      font-weight:800;
+      border:none;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow: 0 8px 18px rgba(43, 123, 187, .25);
+    }
+    .btn:hover{filter:brightness(1.03); transform:translateY(-1px)}
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--primary);
+      border:1px solid #e6e9ee;
+      box-shadow:none;
+    }
+
+    /* Conteúdo principal */
+    .main{
+      padding:20px 22px 32px;
+    }
+
+    .topbar{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow: var(--shadow);
+      gap:12px;
+      position:sticky; top:0; z-index:9;
+    }
+
+    .crumb{
+      font-weight:800;
+      color:var(--primary);
+      font-size:16px;
+    }
+
+    /* Conteúdo */
+    .content{
+      margin-top:14px;
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:16px;
+      padding:18px;
+      box-shadow: var(--shadow);
+      max-width:980px;
+    }
+
+    .content h1{
+      margin:0 0 8px;
+      color:var(--primary);
+      font-size:clamp(20px, 2.6vw, 28px);
+    }
+    .content h2{
+      margin-top:18px;
+      color:var(--primary);
+      font-size:clamp(16px, 2.1vw, 20px);
+    }
+    .content p, .content ul{
+      line-height:1.65;
+      color:#334155;
+      font-size:15px;
+    }
+
+    .danger{
+      background:#fff2f2;
+      border:1px solid #ffc9c9;
+      padding:12px;
+      border-radius:12px;
+    }
+    .ok{
+      background:#eefbf2;
+      border:1px solid #ccefd8;
+      padding:12px;
+      border-radius:12px;
+    }
+    .tip{
+      background:#eef5ff;
+      border:1px solid #d7e7ff;
+      padding:12px;
+      border-radius:12px;
+    }
+
+    .actions{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px){
+      .app{grid-template-columns: 240px 1fr;}
+      .sidebar{padding:14px;}
+      .main{padding:16px;}
+    }
+
+    /* MOBILE: main em cima, sidebar embaixo + sem logo */
+    @media (max-width: 720px){
+      .app{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .main{order:1;}
+
+      .sidebar{
+        order:2;
+        position:relative;
+        height:auto;
+        border-right:none;
+        border-top:1px solid #e6e9ee;
+        padding:12px;
+      }
+
+      /* esconde logo no mobile */
+      .brand{display:none;}
+
+      .side-section{box-shadow:none;}
+      .topbar{position:relative;}
+    }
+
+    @media (min-width: 1400px){
+      .app{grid-template-columns: 320px 1fr;}
+      .main{padding:26px 30px 40px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="side-section">
+        <div class="side-title">Navegação</div>
+        <div class="side-nav">
+          <a href="index.html">🏠 Início</a>
+          <a href="propaganda.html" style="background:#eef5fb;">🎯 Propagandas</a>
+          <a href="fraudes.html">🛡️ Fraudes</a>
+          <a href="bets.html">🎲 Bets</a>
+          <a href="matematica.html">📊 Matemática</a>
+          <a href="publico.html">👥 Público-alvo</a>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-title">Sobre</div>
+        <p style="margin:0;color:var(--muted);font-size:14px;line-height:1.5;">
+          Propaganda não é “só anúncio”. É uma ferramenta que mexe com emoções,
+          desejos e decisões. Aqui você aprende a reconhecer isso.
+        </p>
+      </div>
+
+      <div class="side-section" style="display:grid;gap:8px;">
+        <button class="btn" onclick="location.href='propaganda.html'">Ler conteúdo</button>
+        <button class="btn secondary" onclick="location.href='fraudes.html'">Próximo: Fraudes</button>
+      </div>
+
+      <!-- LOGO DESKTOP (embaixo) -->
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="Invest Seguroo Logo">
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="topbar">
+        <div class="crumb">Invest Seguroo • Propagandas</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:700;">
+          Como anúncios moldam escolhas
+        </div>
+      </div>
+
+      <section class="content">
+        <h1>Como as propagandas influenciam as escolhas das pessoas?</h1>
+        <p>
+          Propaganda é feita para <strong>convencer</strong>. Ela não vende só um produto,
+          vende uma ideia: status, segurança, felicidade, sensação de pertencimento.
+          Por isso, muitas vezes você não compra porque “precisa”, mas porque o anúncio
+          despertou uma emoção ou um medo que parece real.
+        </p>
+
+        <h2>O que a propaganda faz com a mente</h2>
+        <div class="tip">
+          <ul>
+            <li><strong>Cria desejo</strong>: mostra um “problema” que você nem sabia que tinha.</li>
+            <li><strong>Usa emoções</strong>: alegria, medo, ansiedade, urgência, esperança.</li>
+            <li><strong>Ativa atalhos mentais</strong>: “se todo mundo compra, deve ser bom”.</li>
+            <li><strong>Faz comparar</strong>: te coloca uma oferta “limitada” para parecer única.</li>
+            <li><strong>Promete solução rápida</strong>: caminho curto para dinheiro, beleza ou sucesso.</li>
+          </ul>
+        </div>
+
+        <h2>Técnicas comuns (e por que funcionam)</h2>
+        <ul>
+          <li><strong>Escassez/urgência:</strong> “últimas vagas”, “só hoje”, “acaba em 1 hora”. Isso pressiona a decisão.</li>
+          <li><strong>Prova social:</strong> reviews, depoimentos, “milhares de alunos”. A mente segue o grupo.</li>
+          <li><strong>Autoridade:</strong> celebridades, médicos, especialistas, influenciadores. A credibilidade emprestada convence.</li>
+          <li><strong>Histórias emocionais:</strong> você se vê na narrativa e compra para “virar o personagem vencedor”.</li>
+          <li><strong>Preço âncora:</strong> mostra um valor alto riscado e depois o “desconto imperdível”.</li>
+        </ul>
+
+        <h2>Quando a propaganda usa IA, o impacto pode ser maior</h2>
+        <p>
+          Propagandas com inteligência artificial conseguem ser mais rápidas, personalizadas
+          e persuasivas. Elas analisam comportamento, idade, região e interesses para criar
+          anúncios “do jeito que você gosta”. Parece útil, mas isso também aumenta o risco de
+          manipulação.
+        </p>
+        <div class="danger">
+          <ul>
+            <li><strong>Hiperpersonalização:</strong> o anúncio aparece no momento exato em que você está mais vulnerável.</li>
+            <li><strong>Conteúdo sintético realista:</strong> vídeos, imagens e vozes falsas (deepfakes) podem parecer verdadeiros.</li>
+            <li><strong>Escala gigante:</strong> golpistas conseguem criar milhares de anúncios falsos em minutos.</li>
+            <li><strong>Falso “especialista”:</strong> IA imita pessoas famosas para dar autoridade a promessas de lucro fácil.</li>
+          </ul>
+        </div>
+
+        <h2>Propagandas falsas: por que tanta gente cai?</h2>
+        <p>
+          Anúncios falsos geralmente se disfarçam de oferta imperdível, investimento seguro,
+          promoção de loja famosa ou “robô que garante lucro”. Eles usam o mesmo visual de
+          empresas verdadeiras e se aproveitam de pressa e emoção, especialmente nas redes sociais.
+        </p>
+
+        <h2>Como se proteger e decidir melhor</h2>
+        <div class="ok">
+          <ul>
+            <li><strong>Desconfie de pressa:</strong> se te empurram pra decidir rápido, pare.</li>
+            <li><strong>Procure o canal oficial:</strong> não clique só no anúncio; vá ao site/app original.</li>
+            <li><strong>Compare promessas com a realidade:</strong> “lucro garantido” não existe.</li>
+            <li><strong>Pergunte:</strong> “isso resolve um problema real ou só mexeu com minha emoção?”</li>
+            <li><strong>Durma no assunto:</strong> tempo reduz impulso e evita arrependimento.</li>
+          </ul>
+        </div>
+
+        <h2>Regra simples de ouro</h2>
+        <p>
+          <strong>Se um anúncio te faz sentir urgência, medo ou promessa de milagre, ele está tentando controlar sua decisão.</strong>
+          A melhor defesa é pensar com calma e validar a informação fora da propaganda.
+        </p>
+
+        <div class="actions">
+          <a class="btn secondary" href="index.html">← Voltar ao início</a>
+          <a class="btn" href="fraudes.html">Próximo: Fraudes →</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

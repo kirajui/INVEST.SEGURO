@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Público-alvo • Invest Seguroo</title>
+
+  <style>
+    :root{
+      --primary:#0b2f4f;
+      --primary-2:#0f3e66;
+      --accent:#2b7bbb;
+      --accent-2:#4aa3e0;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#5b6675;
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Layout geral */
+    .app{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      background:linear-gradient(180deg, #ffffff, #f7f9fb);
+      border-right:1px solid #e6e9ee;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      transition: .25s ease;
+    }
+
+    /* Logo sidebar (desktop embaixo) */
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:8px;
+      margin-top:auto; /* joga a logo pro fim no desktop */
+    }
+    .brand img{height:200px}
+
+    .side-section{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px;
+      box-shadow: var(--shadow);
+    }
+
+    .side-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .side-nav{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .side-nav a{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:600;
+      color:var(--primary);
+      transition:.15s;
+    }
+    .side-nav a:hover{
+      background:#eef5fb;
+      transform:translateX(2px);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      background:var(--accent);
+      color:white;
+      padding:11px 12px;
+      border-radius:12px;
+      font-weight:800;
+      border:none;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow: 0 8px 18px rgba(43, 123, 187, .25);
+    }
+    .btn:hover{filter:brightness(1.03); transform:translateY(-1px)}
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--primary);
+      border:1px solid #e6e9ee;
+      box-shadow:none;
+    }
+
+    /* Conteúdo principal */
+    .main{
+      padding:20px 22px 32px;
+    }
+
+    .topbar{
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:14px;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow: var(--shadow);
+      gap:12px;
+      position:sticky; top:0; z-index:9;
+    }
+
+    .crumb{
+      font-weight:800;
+      color:var(--primary);
+      font-size:16px;
+    }
+
+    /* Conteúdo */
+    .content{
+      margin-top:14px;
+      background:var(--card);
+      border:1px solid #e6e9ee;
+      border-radius:16px;
+      padding:18px;
+      box-shadow: var(--shadow);
+      max-width:980px;
+    }
+
+    .content h1{
+      margin:0 0 8px;
+      color:var(--primary);
+      font-size:clamp(20px, 2.6vw, 28px);
+    }
+    .content h2{
+      margin-top:18px;
+      color:var(--primary);
+      font-size:clamp(16px, 2.1vw, 20px);
+    }
+    .content p, .content ul{
+      line-height:1.65;
+      color:#334155;
+      font-size:15px;
+    }
+
+    .danger{
+      background:#fff2f2;
+      border:1px solid #ffc9c9;
+      padding:12px;
+      border-radius:12px;
+    }
+    .ok{
+      background:#eefbf2;
+      border:1px solid #ccefd8;
+      padding:12px;
+      border-radius:12px;
+    }
+
+    .actions{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px){
+      .app{grid-template-columns: 240px 1fr;}
+      .sidebar{padding:14px;}
+      .main{padding:16px;}
+    }
+
+    /* MOBILE: main em cima, sidebar embaixo + sem logo */
+    @media (max-width: 720px){
+      .app{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .main{order:1;}
+
+      .sidebar{
+        order:2;
+        position:relative;
+        height:auto;
+        border-right:none;
+        border-top:1px solid #e6e9ee;
+        padding:12px;
+      }
+
+      /* esconde logo no mobile */
+      .brand{display:none;}
+
+      .side-section{box-shadow:none;}
+      .topbar{position:relative;}
+    }
+
+    @media (min-width: 1400px){
+      .app{grid-template-columns: 320px 1fr;}
+      .main{padding:26px 30px 40px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="side-section">
+        <div class="side-title">Navegação</div>
+        <div class="side-nav">
+          <a href="index.html">🏠 Início</a>
+          <a href="propaganda.html">🎯 Propagandas</a>
+          <a href="fraudes.html">🛡️ Fraudes</a>
+          <a href="bets.html">🎲 Bets</a>
+          <a href="matematica.html">📊 Matemática</a>
+          <a href="publico.html" style="background:#eef5fb;">👥 Público-alvo</a>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-title">Sobre</div>
+        <p style="margin:0;color:var(--muted);font-size:14px;line-height:1.5;">
+          Este tópico mostra quem é mais vulnerável a golpes e por quê,
+          ajudando a criar prevenção direcionada.
+        </p>
+      </div>
+
+      <div class="side-section" style="display:grid;gap:8px;">
+        <button class="btn secondary" onclick="location.href='index.html'">⬅ Voltar ao início</button>
+      </div>
+
+      <!-- LOGO DESKTOP (embaixo) -->
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="Invest Seguroo Logo">
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="topbar">
+        <div class="crumb">Invest Seguroo • Público-alvo</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:700;">
+          Quem cai mais em golpes e por quê
+        </div>
+      </div>
+
+      <section class="content">
+        <h1>Público mais propenso a cair em golpes</h1>
+
+        <p>
+          Quando falamos em fraudes e golpes financeiros, existe um ponto importante:
+          <strong>qualquer pessoa pode cair</strong>. Golpistas não dependem só de ingenuidade —
+          eles usam psicologia, pressão emocional, aparência profissional e até “autoridade falsa”.
+          Ainda assim, alguns perfis têm risco maior, porque vivem situações que facilitam o golpe.
+        </p>
+
+        <h2>1. Quantas pessoas caem em golpes por dia?</h2>
+        <div class="danger">
+          <p style="margin-top:0;">
+            Uma pesquisa nacional do DataSenado mostrou que <strong>24% dos brasileiros com mais de 16 anos</strong>
+            foram vítimas de golpes digitais nos últimos 12 meses — isso dá cerca de
+            <strong>40,85 milhões de pessoas</strong> em um ano. 
+          </p>
+          <p>
+            Fazendo uma média simples: 40,85 milhões ÷ 365 dias ≈ <strong>112 mil vítimas por dia</strong>.
+            Esse número é uma estimativa média e mostra a dimensão do problema.
+          </p>
+        </div>
+
+        <h2>2. Perfis mais vulneráveis</h2>
+        <p>
+          Os golpes mais eficazes atingem quem está sob pressão financeira ou emocional.
+          A seguir, os grupos com maior probabilidade de cair:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Pessoas endividadas ou sem renda estável:</strong> tendem a aceitar propostas
+            de “dinheiro rápido”, empréstimos falsos ou “investimentos garantidos”.
+          </li>
+          <li>
+            <strong>Jovens e usuários intensos de redes sociais:</strong> são os mais expostos a
+            propaganda, influenciadores e “oportunidades milagrosas”.
+          </li>
+          <li>
+            <strong>Idosos e pessoas com pouca familiaridade digital:</strong> têm mais dificuldade
+            para identificar sites falsos, links perigosos e contatos clonados.
+          </li>
+          <li>
+            <strong>Pessoas com baixa educação financeira:</strong> não comparam promessas com a realidade
+            do mercado e acreditam em lucro alto sem risco.
+          </li>
+          <li>
+            <strong>Quem está vivendo crise emocional:</strong> luto, separação, doença ou estresse
+            aumentam decisões impulsivas e reduzem atenção a sinais de alerta.
+          </li>
+        </ul>
+
+        <h2>3. Por que esses perfis caem mais?</h2>
+        <p>
+          Golpistas exploram três pontos principais:
+        </p>
+
+        <div class="danger">
+          <ul>
+            <li><strong>Urgência:</strong> “é agora ou perde a chance”.</li>
+            <li><strong>Ganância e esperança:</strong> promessa de lucro rápido ou saída da dívida.</li>
+            <li><strong>Autoridade falsa:</strong> influenciador, “especialista”, “banco”, “governo”.</li>
+          </ul>
+        </div>
+
+        <h2>4. Golpes que mais pegam cada público</h2>
+        <ul>
+          <li><strong>Endividados:</strong> falso empréstimo, renegociação fake, Pix urgente.</li>
+          <li><strong>Jovens:</strong> bets, robôs milagrosos, links patrocinados, “sinais vip”.</li>
+          <li><strong>Idosos:</strong> clonagem de WhatsApp, falso banco, falso parente pedindo ajuda.</li>
+          <li><strong>Pouca educação financeira:</strong> pirâmide, investimento “garantido”.</li>
+        </ul>
+
+        <h2>5. Como orientar e proteger cada perfil</h2>
+        <div class="ok">
+          <ul>
+            <li><strong>Ensine a desconfiar de promessas fáceis:</strong> dinheiro rápido quase sempre é golpe.</li>
+            <li><strong>Fale sobre comparação:</strong> se o retorno é “alto demais”, não é real.</li>
+            <li><strong>Oriente a esperar:</strong> golpes usam pressa; investimento sério não.</li>
+            <li><strong>Mostre exemplos reais:</strong> casos próximos ajudam a criar alerta.</li>
+            <li><strong>Reforce canais oficiais:</strong> não clicar em links enviados por terceiros.</li>
+          </ul>
+        </div>
+
+        <h2>Mensagem final</h2>
+        <p>
+          A melhor defesa contra golpe não é “ser esperto”, e sim
+          <strong>ter informação e tempo para pensar</strong>.
+          Todos estamos vulneráveis quando estamos com pressa ou dificuldade.
+          Por isso, educação financeira salva dinheiro, evita sofrimento
+          e protege famílias inteiras.
+        </p>
+
+        <div class="actions">
+          <a class="btn secondary" href="matematica.html">← Voltar para Matemática</a>
+          <a class="btn" href="index.html">Ir para o início →</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>
